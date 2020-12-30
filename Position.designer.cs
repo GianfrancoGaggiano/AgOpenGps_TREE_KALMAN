@@ -229,7 +229,9 @@ namespace AgOpenGPS
 
                                     //don't add the total distance again
                                     stepFixPts[(totalFixSteps - 1)].heading = 0;
-                                    varProcess = pn.speed *2* 0.001;
+                                    //MODIFICATO DA GAGGIANO GIANFRANCO IL 30/12/2020
+
+                                    varProcess = pn.speed *2* 0.001;//kalman variabile proporzionale alla velocità 
                                     //------------------------------------------------------Heading
 
                                     gpsHeading = Math.Atan2(pn.fix.easting - stepFixPts[currentStepFix].easting,
@@ -240,11 +242,11 @@ namespace AgOpenGPS
                                     // 
                                     if (gpsHeading < 0)
                                     {
-                                        condizione = true; //verifica se l'angolo è negativo
-                                        gpsHeading = ((gpsHeading * -1)); // se l'angolo è negativo lo rende positivo ovvero se l'heading si trova nel secondo settore dei 360°
+                                        condizione = true; //verifica se l'angolo è MAGGIORE DI PI (>180 )
+                                        gpsHeading = ((gpsHeading * -1)); // se l'angolo è MAGGIORE 2PI (SE MAGGIORE DI 2PI CAMBIA SEGNO)
                                     }
                                     fixRaw = gpsHeading;
-                                    //---------------------------- END CODICE MODIFICATO CON FILTRO KALMAN
+                                   
 
 
 
@@ -275,13 +277,12 @@ namespace AgOpenGPS
 
 
                                     gpsHeading = Xe;
-                                    if (condizione == true) gpsHeading = (glm.twoPI - gpsHeading); // in caso di angolo negativo minore di -180 lo rende positivo ed aggiunge 180 per il secondo quadrante dell'angolo giro
+                                    if (condizione == true) gpsHeading = (glm.twoPI - gpsHeading); // in caso di angolo negativo minore di  -180 lo rende positivo ed aggiunge 180 
 
-                                    condizione = false; // setta la condizione a falso per il controllo sopra relativa alla negatività dell'angolo
-                                                        // if (condizione == true) gpsHeading = ((180 - gpsHeading) * 2) + 180;
-
-                                    //condizione = false;
-                                    //if (gpsHeading < 0) gpsHeading += glm.twoPI;
+                                    condizione = false; // setta la condizione a falso per il controllo sopra relativa alla negatività dell'angolo pronta per un nuovo loop
+                                                      
+                                     //---------------------------- END CODICE MODIFICATO CON FILTRO KALMAN
+                                     
 
 
 
