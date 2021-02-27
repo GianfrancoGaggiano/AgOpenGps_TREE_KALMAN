@@ -5,3 +5,5 @@ the fix to fix heading which would otherwise cause the orientation to rotate con
 
 Here attached link to the video test for 360 degree rotation  with gps generator. https://youtu.be/WCbDmg35tP4
 
+27/02/2021 added zip file with kalman version of AgOpengGps with speed dependent variable kalman filter, and use of IMU BRICK 2.0 mode 2 and it's roll filtered.
+
